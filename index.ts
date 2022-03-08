@@ -35,36 +35,41 @@ app.get('/users/:id', async (req,res)=>{
     res.send(userFound)
 })
 
-app.patch('/users/:id',async (req,res) => {
-    const id = Number(req.params.id)
-    const body = req.body 
-    const hobbies = body.hobbies
-    // @ts-ignore
-    let newHobbies = hobbies.map( hobby => {
-        return { id:hobby.id}
-    })
+// app.patch('/users/:id',async (req,res) => {
+//     const id = Number(req.params.id)
+//     const body = req.body 
+//     const hobbies = body.hobbies
+//     // @ts-ignore
+//     let newHobbies = hobbies.map( hobby => {
+//         return { id:hobby.id}
+//     })
 
-    const userFound = await prisma.user.findFirst({
-        where:{id: id},
-        include: {hobbies:true}
-    })
-        
-    const allHobbies = [...userFound.hobbies, newHobbies]
-    // const oldHobbies = prisma.user.findFirst({
-    //     where:{id:id}
-    // })
+//     const userFound = await prisma.user.findFirst({
+//         where:{id: id},
+//         include: {hobbies:true}
+//     })
     
-    const updatedUser = await prisma.user.update({
-        where:{id: id},
-        data:{
-            hobbies:{
-                set:  allHobbies
-            }
-        }
-    })
+//     if(userFound){
 
-    res.send(updatedUser)
-})
+//         const allHobbies = [userFound.hobbies.map(hobby=>{
+//             return { id:hobby.id}
+//         }), newHobbies]
+//         // const oldHobbies = prisma.user.findFirst({
+//             //     where:{id:id}
+//             // })
+            
+//             const updatedUser = await prisma.user.update({
+//                 where:{id: id},
+//         data:{
+//             hobbies:{
+//                 set:  allHobbies
+//             }
+//         }
+//     })
+//     res.send(updatedUser)
+//     }   
+
+// })
 
 
 
