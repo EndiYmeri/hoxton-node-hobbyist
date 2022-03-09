@@ -82,7 +82,6 @@ app.delete('/users/:id',async (req, res) => {
     res.send({message: "User deleted"})
 })
 
-
 app.post('/addHobby', async (req, res)=>{
     const {id, hobby} = req.body
     const user = await prisma.user.update({
@@ -100,6 +99,7 @@ app.post('/addHobby', async (req, res)=>{
     })
     res.send(user)
 })
+
 app.post('/removeHobby', async (req, res)=>{
     const {id, hobby} = req.body
     
@@ -149,8 +149,5 @@ app.delete('/hobbies/:id',async (req, res) => {
     })
     res.send({message: "Hobby deleted"})
 })
-
-
-
 
 app.listen(PORT, ()=>console.log(`Port on https://localhost:${PORT}`))
