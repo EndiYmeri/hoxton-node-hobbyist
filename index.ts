@@ -117,9 +117,23 @@ app.post('/removeHobby', async (req, res)=>{
 })
 
 app.get('/hobbies', async (req,res)=>{
-    const allUsers = await prisma.hobby.findMany()
-    res.send(allUsers)
+    const searchParam = req.query.search
+    console.log(searchParam)
+    if(searchParam){
+        const hobbiesFound = await prisma.hobby.findMany({
+            where: { 
+                name :{
+                    contains: String(searchParam)
+                }}
+            })
+            res.send(hobbiesFound)
+    }else{
+        const allHobbies = await prisma.hobby.findMany()
+        res.send(allHobbies)
+    }
 })
+
+
 
 app.post('/hobbies', async (req,res) => {
     const body = req.body
